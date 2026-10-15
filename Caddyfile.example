@@ -1,0 +1,37 @@
+# Fragment for the existing caddy-security setup (auth portal at auth.example.com,
+# an OIDC provider such as Pocket ID). Merge into your live Caddyfile; names below are
+# placeholders — reuse your existing identity provider and portal definitions.
+
+{
+	security {
+		# ... existing oauth identity provider "pocketid" and authentication portal ...
+
+		authorization policy netswitch_policy {
+			set auth url https://auth.example.com/oauth2/pocketid
+			crypto key verify {env.JWT_SHARED_KEY}
+
+			# Only these two accounts may use the switch.
+			acl rule {
+				comment allow parents
+				match email parent1@example.com parent2@example.com
+				allow stop log info
+			}
+			acl rule {
+				comment deny everyone else
+				match any
+				deny log warn
+			}
+
+			# Pass the signed-in user to the app for its audit log.
+			inject header "X-Token-User-Email" from email
+		}
+	}
+}
+
+internet.example.com {
+	authorize with netswitch_policy
+
+	# Docker host running net-switch (published on BIND_ADDR:8080).
+	# (The injected header is only used for logging; access control is the ACL above.)
+	reverse_proxy 192.168.1.10:8080
+}

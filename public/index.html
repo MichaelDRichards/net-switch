@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Internet</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <p class="device" id="device"></p>
+
+    <section class="status" id="status" data-state="loading" aria-live="polite">
+      <div class="dot" aria-hidden="true"></div>
+      <h1 id="headline" data-i18n="loading">Checking…</h1>
+      <p id="detail"></p>
+    </section>
+
+    <section class="actions" id="on-actions">
+      <h2 data-i18n="turnOn">Turn internet on</h2>
+      <div class="grid">
+        <button data-minutes="30" data-i18n="m30">30 min</button>
+        <button data-minutes="60" data-i18n="h1">1 hour</button>
+        <button data-minutes="120" data-i18n="h2">2 hours</button>
+        <button data-until="bedtime" id="bedtime-btn">Until bedtime</button>
+      </div>
+    </section>
+
+    <button class="off" id="off-btn" data-i18n="turnOff">Turn internet off now</button>
+
+    <p class="error" id="error" role="alert" hidden></p>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "net-switch",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "One-button pause/resume of a Firewalla block rule via the MSP API",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=20" }
+}

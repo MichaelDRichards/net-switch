@@ -1,0 +1,15 @@
+services:
+  net-switch:
+    build: .
+    image: net-switch:latest
+    container_name: net-switch
+    restart: unless-stopped
+    env_file: .env
+    # Only Caddy should reach this. Bind to the host's LAN IP (or 127.0.0.1 if
+    # Caddy runs on the same host) and firewall it to the Caddy LXC.
+    ports:
+      - "${BIND_ADDR:-127.0.0.1}:8080:8080"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 128m
